@@ -1,0 +1,18 @@
+{
+  "name": "unleak",
+  "version": "1.0.0",
+  "description": "Stop pasting live secrets in chat. Scrub messy messages into bot-safe, one-time burn links with browser AES-256-GCM.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node test/verify.mjs"
+  },
+  "keywords": [
+    "security",
+    "secrets",
+    "zero-knowledge",
+    "aes-gcm",
+    "burn-links"
+  ],
+  "license": "MIT"
+}

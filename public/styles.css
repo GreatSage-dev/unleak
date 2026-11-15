@@ -1,0 +1,803 @@
+/* Hallmark · v2.0.0 · shape: workbench · theme: playerzero-custom */
+/* critique: Open alabaster canvas (#F3F2EE) with a single white proof strip on the landing page and hairline-divided open sections in the dedicated console tab; zero nested cards or pill clutter. */
+
+:root {
+  --bg-canvas: #F3F2EE;
+  --bg-surface: #FFFFFF;
+  --bg-bezel-outer: #E2E0D8;
+  --bg-bezel-inner: #F5F4F0;
+  --bg-code: #EAE8E1;
+  --ink-primary: #141413;
+  --ink-secondary: #575550;
+  --ink-muted: #8C8A84;
+  --ink-inverse: #FFFFFF;
+  --line-subtle: #E2E0D8;
+  --line-circuit: #D2D0C7;
+  --accent-terracotta: #DE6347;
+  --accent-terracotta-dark: #C85237;
+  --status-safe: #1D6F4A;
+  --status-burned: #B84230;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  overflow-x: clip;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle top blueprint grid fading into the open canvas */
+.pz-shell {
+  background-image:
+    linear-gradient(to right, rgba(20, 20, 19, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 20, 19, 0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-repeat: repeat-x;
+}
+
+.pz-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Focus states */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ink-primary);
+  outline-offset: 2px;
+}
+
+/* 1. TOP NAVIGATION BAR */
+.pz-nav-outer {
+  max-width: 1184px;
+  margin: 0 auto;
+  padding: 18px 32px 0;
+}
+
+.pz-nav {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 14px;
+  padding: 10px 14px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pz-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink-primary);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+.pz-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.pz-nav-tabs a {
+  text-decoration: none;
+  color: var(--ink-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.15s ease;
+}
+
+.pz-nav-tabs a:hover,
+.pz-nav-tabs a.is-active {
+  color: var(--ink-primary);
+}
+
+.pz-nav-tabs a.is-active {
+  font-weight: 600;
+}
+
+.pz-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.pz-nav-quiet-link {
+  text-decoration: none;
+  color: var(--ink-primary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.pz-btn-solid {
+  background-color: var(--ink-primary);
+  color: var(--ink-inverse);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pz-btn-solid:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+/* 2. HERO SECTION (Open canvas, dot-matrix words, schematic lines) */
+.pz-hero {
+  padding: 64px 0 56px;
+  text-align: center;
+}
+
+.pz-dot-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pz-dot-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.pz-schematic {
+  position: relative;
+  max-width: 960px;
+  height: 244px;
+  margin: 8px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pz-schematic-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.pz-center-emblem-outer {
+  position: relative;
+  z-index: 2;
+  width: 140px;
+  height: 140px;
+  border-radius: 30px;
+  background-color: var(--bg-bezel-outer);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pz-center-emblem-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: var(--bg-bezel-inner);
+  border: 1px solid var(--line-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pz-schematic-node {
+  position: absolute;
+  z-index: 3;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--line-circuit);
+  border-radius: 999px;
+  padding: 3px 11px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-secondary);
+}
+
+.pz-hero-copy {
+  max-width: 440px;
+  margin: 22px auto 28px;
+  font-size: 16px;
+  color: var(--ink-secondary);
+  font-weight: 400;
+}
+
+/* Signature PlayerZero CTA with Terracotta Icon Square */
+.pz-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--ink-primary);
+  color: var(--ink-inverse);
+  border: none;
+  border-radius: 13px;
+  padding: 5px 18px 5px 5px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px var(--bg-bezel-outer);
+  transition: transform 0.15s ease;
+}
+
+.pz-btn-cta:hover {
+  transform: translateY(-1px);
+}
+
+.pz-cta-square-orange {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--accent-terracotta);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Secondary White CTA with Dark Icon Square */
+.pz-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  border: 1px solid var(--line-subtle);
+  border-radius: 11px;
+  padding: 5px 15px 5px 5px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.pz-btn-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.pz-cta-square-dark {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background-color: var(--ink-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 3. THE SINGLE WHITE PROOF STRIP ON THE LANDING PAGE */
+.pz-proof-strip {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 22px;
+  padding: 36px 40px;
+  margin: 16px auto 88px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 36px;
+}
+
+.pz-proof-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 170px;
+}
+
+.pz-proof-cell + .pz-proof-cell {
+  border-left: 1px solid var(--line-subtle);
+  padding-left: 36px;
+}
+
+.pz-proof-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.pz-proof-caption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+/* 4. OPEN EDITORIAL SECTIONS (NO CARDS, NO SHAPES — DIRECTLY ON CANVAS) */
+.pz-editorial {
+  padding: 12px 0 96px;
+}
+
+.pz-editorial-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.pz-display-two-tone {
+  font-size: clamp(32px, 3.8vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.pz-tone-dark {
+  color: var(--ink-primary);
+}
+
+.pz-tone-muted {
+  color: var(--ink-muted);
+}
+
+.pz-editorial-aside {
+  margin-top: 56px;
+  max-width: 310px;
+}
+
+.pz-editorial-aside p {
+  font-size: 15px;
+  color: var(--ink-secondary);
+  margin-bottom: 20px;
+}
+
+.pz-halftone-wrap {
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#halftone-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pz-bottom-editorial-row {
+  margin-top: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.pz-bottom-headline {
+  font-size: clamp(24px, 2.8vw, 32px);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  max-width: 480px;
+}
+
+.pz-bottom-paragraph {
+  font-size: 14.5px;
+  color: var(--ink-secondary);
+  max-width: 280px;
+}
+
+/* 5. OPEN HAIRLINE SPECIFICATIONS & PRICING ON CANVAS (NO BOXES) */
+.pz-open-section {
+  padding: 64px 0;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.pz-open-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.pz-section-heading {
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.pz-section-sub {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--ink-secondary);
+  max-width: 340px;
+}
+
+.pz-hairline-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.pz-hairline-row {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 24px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-subtle);
+  font-size: 15px;
+}
+
+.pz-hairline-row:first-child {
+  padding-top: 0;
+}
+
+.pz-hairline-term {
+  font-weight: 500;
+  color: var(--ink-primary);
+}
+
+.pz-hairline-def {
+  color: var(--ink-secondary);
+}
+
+/* Open Pricing Columns (Separated by Hairline, Not Boxed Cards) */
+.pz-pricing-open {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.pz-pricing-col + .pz-pricing-col {
+  border-left: 1px solid var(--line-subtle);
+  padding-left: 48px;
+}
+
+.pz-price-figure {
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin: 8px 0 12px;
+}
+
+.pz-price-figure span {
+  font-size: 15px;
+  color: var(--ink-muted);
+}
+
+.pz-plain-list {
+  list-style: none;
+  margin: 20px 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--ink-secondary);
+}
+
+/* 6. DEDICATED CONSOLE TAB (/console.html) — OPEN WORKBENCH LAYOUT */
+.pz-console-header {
+  padding: 56px 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.pz-console-band {
+  padding: 52px 0;
+  border-top: 1px solid var(--line-subtle);
+  display: grid;
+  grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
+  gap: 52px;
+  align-items: start;
+}
+
+.pz-step-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.pz-band-title {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.pz-band-copy {
+  font-size: 15px;
+  color: var(--ink-secondary);
+  margin-bottom: 20px;
+}
+
+.pz-sample-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.pz-text-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease;
+}
+
+.pz-text-btn:hover,
+.pz-text-btn.is-active {
+  color: var(--ink-primary);
+  font-weight: 500;
+}
+
+/* The Single White Composer Surface in Console Step 1 */
+.pz-composer-surface {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.pz-composer-textarea {
+  width: 100%;
+  min-height: 148px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-primary);
+  resize: vertical;
+  outline: none;
+}
+
+.pz-composer-footer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pz-detected-summary {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+}
+
+.pz-composer-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pz-ttl-picker {
+  background: transparent;
+  border: 1px solid var(--line-subtle);
+  border-radius: 9px;
+  padding: 7px 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--ink-primary);
+}
+
+/* Step 2: Open Scrubbed Output */
+.pz-scrubbed-text {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line-subtle);
+  margin-bottom: 20px;
+}
+
+.pz-burn-inline-anchor {
+  color: var(--accent-terracotta);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 500;
+}
+
+/* Step 3: Open Hairline Capsule Rows (No Nested Boxes!) */
+.pz-capsule-row {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.pz-capsule-row:first-child {
+  padding-top: 0;
+}
+
+.pz-capsule-header-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.pz-capsule-title {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.pz-capsule-state {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.pz-capsule-state.is-locked {
+  color: var(--status-safe);
+}
+
+.pz-capsule-state.is-burned {
+  color: var(--status-burned);
+}
+
+.pz-capsule-url {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+  word-break: break-all;
+  margin-bottom: 16px;
+}
+
+.pz-capsule-url strong {
+  color: var(--ink-primary);
+  font-weight: 500;
+}
+
+.pz-capsule-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.pz-capsule-log {
+  margin-top: 14px;
+  padding-left: 14px;
+  border-left: 2px solid var(--ink-primary);
+  font-size: 14px;
+  color: var(--ink-secondary);
+  display: none;
+}
+
+.pz-capsule-log.is-visible {
+  display: block;
+}
+
+.pz-revealed-value {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-primary);
+  background-color: var(--bg-code);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  word-break: break-all;
+}
+
+/* Step 4: Open Rotation Order List */
+.pz-rotation-item {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.pz-rotation-item:first-child {
+  padding-top: 0;
+}
+
+.pz-rotation-item h4 {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.pz-rotation-window {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+
+.pz-rotation-steps {
+  padding-left: 18px;
+  font-size: 14.5px;
+  color: var(--ink-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pz-footer {
+  padding: 44px 0 64px;
+  border-top: 1px solid var(--line-subtle);
+  margin-top: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--ink-muted);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 880px) {
+  .pz-proof-strip,
+  .pz-editorial-split,
+  .pz-open-grid,
+  .pz-pricing-open,
+  .pz-console-band {
+    grid-template-columns: 1fr;
+  }
+  .pz-proof-cell + .pz-proof-cell,
+  .pz-pricing-col + .pz-pricing-col {
+    border-left: none;
+    border-top: 1px solid var(--line-subtle);
+    padding-left: 0;
+    padding-top: 28px;
+  }
+  .pz-hairline-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .pz-nav-tabs {
+    gap: 16px;
+  }
+}

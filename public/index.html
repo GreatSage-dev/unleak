@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unleak — Stop Pasting Live Secrets in Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="pz-shell">
+    <!-- 1. FLOATING NAVBAR WITH DEDICATED CONSOLE TAB -->
+    <div class="pz-nav-outer">
+      <nav class="pz-nav" aria-label="Main navigation">
+        <a href="/" class="pz-brand">
+          <svg width="26" height="26" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <rect x="12" y="2" width="12" height="9" rx="3.5" fill="#141413"/>
+            <rect x="12" y="25" width="12" height="9" rx="3.5" fill="#141413"/>
+            <rect x="2" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+            <rect x="25" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+            <circle cx="9.5" cy="9.5" r="2.5" fill="#141413"/>
+            <circle cx="26.5" cy="9.5" r="2.5" fill="#141413"/>
+            <circle cx="9.5" cy="26.5" r="2.5" fill="#141413"/>
+            <circle cx="26.5" cy="26.5" r="2.5" fill="#141413"/>
+          </svg>
+          <span>Unleak</span>
+        </a>
+
+        <ul class="pz-nav-tabs">
+          <li><a href="/" class="is-active">Overview</a></li>
+          <li><a href="/console.html">Console</a></li>
+          <li><a href="#architecture">Security</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="/deck.html">Brief</a></li>
+        </ul>
+
+        <div class="pz-nav-right">
+          <a href="/deck.html" class="pz-nav-quiet-link">Read brief</a>
+          <a href="/console.html" class="pz-btn-solid">Open Console</a>
+        </div>
+      </nav>
+    </div>
+
+    <main class="pz-container">
+      <!-- 2. HERO SECTION (Directly on open canvas) -->
+      <section class="pz-hero">
+        <div class="pz-dot-row">
+          <div class="js-dot-matrix" data-text="PASTE. SCRUB." data-dot-size="2.2" data-gap="5.4"></div>
+        </div>
+
+        <div class="pz-schematic" aria-label="Zero-knowledge secret scrubbing schematic">
+          <svg class="pz-schematic-svg" viewBox="0 0 960 244" preserveAspectRatio="none">
+            <path d="M 90 42 H 335 Q 368 42 386 68 L 420 110" stroke="#D2D0C7" stroke-width="1.25" fill="none" />
+            <circle cx="90" cy="42" r="3.5" fill="#141413" />
+
+            <path d="M 70 202 H 345 Q 375 202 394 178 L 420 138" stroke="#D2D0C7" stroke-width="1.25" fill="none" />
+            <circle cx="332" cy="202" r="3.5" fill="#141413" />
+
+            <path d="M 540 110 L 574 68 Q 592 42 625 42 H 870" stroke="#D2D0C7" stroke-width="1.25" fill="none" />
+            <circle cx="815" cy="42" r="3.5" fill="#141413" />
+
+            <path d="M 540 138 L 566 178 Q 585 202 615 202 H 895" stroke="#D2D0C7" stroke-width="1.25" fill="none" />
+            <circle cx="655" cy="202" r="3.5" fill="#141413" />
+          </svg>
+
+          <span class="pz-schematic-node" style="top: 28px; left: 21%;">Slack</span>
+          <span class="pz-schematic-node" style="bottom: 28px; left: 15%;">sk_live</span>
+          <span class="pz-schematic-node" style="bottom: 28px; left: 23%;">postgres</span>
+
+          <div class="pz-center-emblem-outer">
+            <div class="pz-center-emblem-inner">
+              <svg width="52" height="52" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                <rect x="12" y="2" width="12" height="9" rx="3.5" fill="#141413"/>
+                <rect x="12" y="25" width="12" height="9" rx="3.5" fill="#141413"/>
+                <rect x="2" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+                <rect x="25" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+                <circle cx="9.5" cy="9.5" r="2.6" fill="#141413"/>
+                <circle cx="26.5" cy="9.5" r="2.6" fill="#141413"/>
+                <circle cx="9.5" cy="26.5" r="2.6" fill="#141413"/>
+                <circle cx="26.5" cy="26.5" r="2.6" fill="#141413"/>
+              </svg>
+            </div>
+          </div>
+
+          <span class="pz-schematic-node" style="top: 28px; right: 23%;">AES-GCM</span>
+          <span class="pz-schematic-node" style="bottom: 28px; right: 20%;">Bot-Safe</span>
+          <span class="pz-schematic-node" style="bottom: 28px; right: 12%;">1-Click Burn</span>
+          <span class="pz-schematic-node" style="bottom: 28px; right: 4%;">Rotate</span>
+        </div>
+
+        <div class="pz-dot-row" style="margin-top: 6px;">
+          <div class="js-dot-matrix" data-text="UNLEAK." data-dot-size="2.2" data-gap="5.4"></div>
+        </div>
+
+        <p class="pz-hero-copy">
+          Unleak scrubs live keys out of messy chat messages before they stay in Slack, WhatsApp, or Telegram history forever.
+        </p>
+
+        <a href="/console.html" class="pz-btn-cta">
+          <span class="pz-cta-square-orange">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+              <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+              <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+              <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+              <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+              <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+            </svg>
+          </span>
+          <span>Open Scrub Console</span>
+        </a>
+      </section>
+
+      <!-- 3. THE SINGLE WHITE PROOF STRIP -->
+      <section class="pz-proof-strip" aria-label="Benchmarks">
+        <div class="pz-proof-cell">
+          <div class="pz-proof-brand">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="1" y="9" width="2.5" height="6" rx="1" fill="#141413"/>
+              <rect x="5" y="6" width="2.5" height="9" rx="1" fill="#141413"/>
+              <rect x="9" y="3" width="2.5" height="12" rx="1" fill="#141413"/>
+              <rect x="13" y="1" width="2.5" height="14" rx="1" fill="#141413"/>
+            </svg>
+            <span>GitGuardian Report</span>
+          </div>
+          <div>
+            <div class="js-dot-matrix" data-text="12.8M" data-dot-size="1.85" data-gap="4.5"></div>
+            <p class="pz-proof-caption">Live credentials leaked across developer repos and team chats in one year</p>
+          </div>
+        </div>
+
+        <div class="pz-proof-cell">
+          <div class="pz-proof-brand">
+            <svg width="18" height="16" viewBox="0 0 18 16" fill="none" aria-hidden="true">
+              <path d="M9 1L2 4V8.5C2 12.2 5 14.8 9 15.5C13 14.8 16 12.2 16 8.5V4L9 1Z" stroke="#141413" stroke-width="1.5"/>
+              <circle cx="9" cy="8.5" r="2" fill="#141413"/>
+            </svg>
+            <span>Preview Bot Immunity</span>
+          </div>
+          <div>
+            <div class="js-dot-matrix" data-text="0 BOTS" data-dot-size="1.85" data-gap="4.5"></div>
+            <p class="pz-proof-caption">Secrets burned prematurely by WhatsApp, Slack, or Telegram link crawlers</p>
+          </div>
+        </div>
+
+        <div class="pz-proof-cell">
+          <p style="font-size: 14.5px; color: var(--ink-secondary); line-height: 1.6;">
+            Paste your chat message as-is. Your browser encrypts each key with AES-256-GCM and hands back the exact same sentence with one-time burn links.
+          </p>
+          <div style="margin-top: 20px;">
+            <a href="/console.html" class="pz-btn-secondary">
+              <span class="pz-cta-square-dark">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+                  <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+                  <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+                  <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+                  <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+                  <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+                </svg>
+              </span>
+              <span>Launch Console</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. OPEN EDITORIAL SECTION (Directly on canvas, zero shapes/boxes) -->
+      <section class="pz-editorial">
+        <div class="pz-editorial-split">
+          <div>
+            <h2 class="pz-display-two-tone">
+              <span class="pz-tone-dark">Introducing Unleak-1</span><br />
+              <span class="pz-tone-muted">Zero-knowledge chat scrubbing</span><br />
+              <span class="pz-tone-muted">capable of</span> <span class="pz-tone-dark">replacing live keys</span><br />
+              <span class="pz-tone-dark">inline in milliseconds</span>
+            </h2>
+
+            <div class="pz-editorial-aside">
+              <p>
+                People do not paste clean environment files in chat. They paste a rushed message with database URLs and API keys mid-sentence. Unleak keeps your text intact and isolates only the credentials.
+              </p>
+              <a href="/console.html" class="pz-btn-secondary">
+                <span class="pz-cta-square-dark">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+                  </svg>
+                </span>
+                <span>Try in Console</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="pz-halftone-wrap" aria-hidden="true">
+            <canvas id="halftone-canvas" width="480" height="360"></canvas>
+          </div>
+        </div>
+
+        <div class="pz-bottom-editorial-row">
+          <h3 class="pz-bottom-headline">
+            <span class="pz-tone-dark">Scrub any credential down to a single token,</span>
+            <span class="pz-tone-muted">and make sure it never lives in chat history again</span>
+          </h3>
+          <p class="pz-bottom-paragraph">
+            The decryption key stays strictly inside the URL hash fragment. Even if our server is breached, only opaque ciphertext exists until the moment your teammate burns it.
+          </p>
+        </div>
+      </section>
+
+      <!-- 5. OPEN HAIRLINE ARCHITECTURE SECTION (Zero boxes/shapes) -->
+      <section class="pz-open-section" id="architecture">
+        <div class="pz-open-grid">
+          <div>
+            <h2 class="pz-section-heading">
+              <span class="pz-tone-dark">Where deterministic code stops</span>
+              <span class="pz-tone-muted">and zero-trust AI begins</span>
+            </h2>
+            <p class="pz-section-sub">
+              Raw secret values never leave your browser in plaintext and never touch a language model.
+            </p>
+          </div>
+
+          <div class="pz-hairline-list">
+            <div class="pz-hairline-row">
+              <div class="pz-hairline-term">In-browser regex</div>
+              <div class="pz-hairline-def">Finds OpenAI, Stripe, Anthropic, AWS, GitHub, Postgres, and Redis credentials inside messy paragraphs in under 1ms.</div>
+            </div>
+            <div class="pz-hairline-row">
+              <div class="pz-hairline-term">WebCrypto AES-256-GCM</div>
+              <div class="pz-hairline-def">Encrypts each secret locally. The 256-bit key remains after <code>#k=</code> in the link and is never transmitted to the server.</div>
+            </div>
+            <div class="pz-hairline-row">
+              <div class="pz-hairline-term">Two-step reveal gate</div>
+              <div class="pz-hairline-def">Chat preview bots hit <code>GET</code> and receive static metadata. Only a human clicking Reveal fires the atomic <code>POST</code> delete.</div>
+            </div>
+            <div class="pz-hairline-row">
+              <div class="pz-hairline-term">Zero-trust rotation AI</div>
+              <div class="pz-hairline-def">Receives only the variable type names after burn to write a prioritized key-rotation checklist.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. OPEN HAIRLINE PRICING SECTION (Zero boxes/shapes) -->
+      <section class="pz-open-section" id="pricing">
+        <div class="pz-open-grid">
+          <div>
+            <h2 class="pz-section-heading">
+              <span class="pz-tone-dark">Free for daily handoffs,</span>
+              <span class="pz-tone-muted">built for agencies</span>
+            </h2>
+            <p class="pz-section-sub">
+              Every burned link introduces the recipient to Unleak. Agencies pay for audit receipts and expiry policies.
+            </p>
+          </div>
+
+          <div class="pz-pricing-open">
+            <div class="pz-pricing-col">
+              <div style="font-size: 16px; font-weight: 500;">Developer</div>
+              <div class="pz-price-figure">$0 <span>/ forever</span></div>
+              <p style="font-size: 14.5px; color: var(--ink-secondary);">
+                For engineers sharing staging and local credentials in Slack, Discord, or WhatsApp.
+              </p>
+              <ul class="pz-plain-list">
+                <li>Unlimited chat message scrubbing</li>
+                <li>Browser AES-256-GCM encryption</li>
+                <li>Slack and WhatsApp bot immunity</li>
+                <li>Post-burn rotation checklist</li>
+              </ul>
+              <a href="/console.html" class="pz-btn-secondary">
+                <span class="pz-cta-square-dark">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+                  </svg>
+                </span>
+                <span>Open Free Console</span>
+              </a>
+            </div>
+
+            <div class="pz-pricing-col">
+              <div style="font-size: 16px; font-weight: 500;">Agency &amp; Freelancer</div>
+              <div class="pz-price-figure">$9 <span>/ month</span></div>
+              <p style="font-size: 14.5px; color: var(--ink-secondary);">
+                For agencies handing off production Stripe, AWS, and database keys to clients.
+              </p>
+              <ul class="pz-plain-list">
+                <li>Custom expiry windows (5m to 7d)</li>
+                <li>Signed "Opened and burned" client receipts</li>
+                <li>Webhook alert when a client reveals a key</li>
+                <li>Custom agency domain on burn links</li>
+              </ul>
+              <a href="/console.html" class="pz-btn-cta">
+                <span class="pz-cta-square-orange">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+                  </svg>
+                </span>
+                <span>Try Agency Flow</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="pz-footer">
+        <div>Unleak — Zero-knowledge secret scrubbing for team chat</div>
+        <div style="display: flex; gap: 24px;">
+          <a href="/console.html" class="pz-nav-quiet-link">Console</a>
+          <a href="/deck.html" class="pz-nav-quiet-link">Executive Brief</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

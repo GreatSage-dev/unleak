@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Brief — Unleak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="pz-shell">
+    <div class="pz-nav-outer">
+      <nav class="pz-nav" aria-label="Main navigation">
+        <a href="/" class="pz-brand">
+          <svg width="26" height="26" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <rect x="12" y="2" width="12" height="9" rx="3.5" fill="#141413"/>
+            <rect x="12" y="25" width="12" height="9" rx="3.5" fill="#141413"/>
+            <rect x="2" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+            <rect x="25" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+            <circle cx="9.5" cy="9.5" r="2.5" fill="#141413"/>
+            <circle cx="26.5" cy="9.5" r="2.5" fill="#141413"/>
+            <circle cx="9.5" cy="26.5" r="2.5" fill="#141413"/>
+            <circle cx="26.5" cy="26.5" r="2.5" fill="#141413"/>
+          </svg>
+          <span>Unleak</span>
+        </a>
+
+        <ul class="pz-nav-tabs">
+          <li><a href="/">Overview</a></li>
+          <li><a href="/console.html">Console</a></li>
+          <li><a href="/#architecture">Security</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="/deck.html" class="is-active">Brief</a></li>
+        </ul>
+
+        <div class="pz-nav-right">
+          <a href="/console.html" class="pz-btn-solid">Open Console</a>
+        </div>
+      </nav>
+    </div>
+
+    <main class="pz-container">
+      <header class="pz-console-header">
+        <div>
+          <h1 class="pz-display-two-tone" style="font-size: clamp(28px, 3.4vw, 40px);">
+            <span class="pz-tone-dark">A problem caused by spreading</span><br />
+            <span class="pz-tone-muted">makes a product that spreads</span>
+          </h1>
+        </div>
+        <p style="font-size: 14.5px; color: var(--ink-secondary); max-width: 340px;">
+          HackOnVibe 2026 executive brief — how Unleak turns daily credential handoffs into a zero-knowledge viral loop.
+        </p>
+      </header>
+
+      <section class="pz-console-band">
+        <div>
+          <span class="pz-step-index">01</span>
+          <h2 class="pz-band-title">The real chat habit</h2>
+        </div>
+        <div>
+          <p style="font-size: 17px; color: var(--ink-primary); margin-bottom: 14px;">
+            Developers do not paste clean environment files in chat. They paste a rushed Slack or WhatsApp paragraph with database URLs and API keys buried mid-sentence.
+          </p>
+          <p style="font-size: 15px; color: var(--ink-secondary);">
+            GitGuardian recorded 12.8 million leaked secrets in a single year. Plain one-time secret boxes fail to change behavior because they force engineers to extract each key manually, generate separate links, and rewrite their message. Unleak accepts the entire messy message, finds every key by regex in the browser, encrypts each with AES-256-GCM, and returns the exact same paragraph with inline burn links.
+          </p>
+        </div>
+      </section>
+
+      <section class="pz-console-band">
+        <div>
+          <span class="pz-step-index">02</span>
+          <h2 class="pz-band-title">The preview bot trap</h2>
+        </div>
+        <div>
+          <p style="font-size: 17px; color: var(--ink-primary); margin-bottom: 14px;">
+            WhatsApp, Telegram, and Slack automatically fetch every shared link to build a preview card.
+          </p>
+          <p style="font-size: 15px; color: var(--ink-secondary);">
+            If a secret link burns on the first <code>GET</code> request, the chat platform's preview crawler eats the secret before your teammate ever sees it. Unleak separates <code>GET</code> preview requests from an atomic human <code>POST</code> burn operation so links survive unlimited chat previews and self-destruct on the first human click.
+          </p>
+        </div>
+      </section>
+
+      <section class="pz-console-band">
+        <div>
+          <span class="pz-step-index">03</span>
+          <h2 class="pz-band-title">Zero-trust AI &amp; revenue</h2>
+        </div>
+        <div>
+          <p style="font-size: 17px; color: var(--ink-primary); margin-bottom: 14px;">
+            AI sees only variable type names, never secret values. Agencies pay $9/month for client handoff receipts.
+          </p>
+          <p style="font-size: 15px; color: var(--ink-secondary); margin-bottom: 24px;">
+            After a burn, Unleak sends only the credential type labels (such as <code>STRIPE_SECRET_KEY</code> and <code>POSTGRES_URI</code>) to generate a prioritized rotation checklist. One-time links are free forever so every recipient discovers the tool organically, while software agencies and freelancers pay $9/month for custom expiry rules and signed "Opened and burned" client compliance receipts.
+          </p>
+          <a href="/console.html" class="pz-btn-cta">
+            <span class="pz-cta-square-orange">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+                <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+                <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+                <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+                <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+                <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+              </svg>
+            </span>
+            <span>Open Scrub Console</span>
+          </a>
+        </div>
+      </section>
+
+      <footer class="pz-footer">
+        <div>Unleak — Zero-knowledge secret scrubbing for team chat</div>
+        <div style="display: flex; gap: 24px;">
+          <a href="/" class="pz-nav-quiet-link">Overview</a>
+          <a href="/console.html" class="pz-nav-quiet-link">Console</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

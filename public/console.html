@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Console — Unleak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="pz-shell">
+    <!-- 1. TOP NAVBAR (Console Tab Active) -->
+    <div class="pz-nav-outer">
+      <nav class="pz-nav" aria-label="Main navigation">
+        <a href="/" class="pz-brand">
+          <svg width="26" height="26" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <rect x="12" y="2" width="12" height="9" rx="3.5" fill="#141413"/>
+            <rect x="12" y="25" width="12" height="9" rx="3.5" fill="#141413"/>
+            <rect x="2" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+            <rect x="25" y="12" width="9" height="12" rx="3.5" fill="#141413"/>
+            <circle cx="9.5" cy="9.5" r="2.5" fill="#141413"/>
+            <circle cx="26.5" cy="9.5" r="2.5" fill="#141413"/>
+            <circle cx="9.5" cy="26.5" r="2.5" fill="#141413"/>
+            <circle cx="26.5" cy="26.5" r="2.5" fill="#141413"/>
+          </svg>
+          <span>Unleak</span>
+        </a>
+
+        <ul class="pz-nav-tabs">
+          <li><a href="/">Overview</a></li>
+          <li><a href="/console.html" class="is-active">Console</a></li>
+          <li><a href="/#architecture">Security</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="/deck.html">Brief</a></li>
+        </ul>
+
+        <div class="pz-nav-right">
+          <a href="/" class="pz-nav-quiet-link">Back to overview</a>
+        </div>
+      </nav>
+    </div>
+
+    <main class="pz-container">
+      <!-- CONSOLE HEADER (Open on canvas) -->
+      <header class="pz-console-header">
+        <div>
+          <h1 class="pz-display-two-tone" style="font-size: clamp(28px, 3.2vw, 38px);">
+            <span class="pz-tone-dark">Scrub a chat message</span><br />
+            <span class="pz-tone-muted">in your browser before sending</span>
+          </h1>
+        </div>
+        <p style="font-size: 14.5px; color: var(--ink-secondary); max-width: 340px;">
+          Everything below runs client-side with WebCrypto AES-256-GCM. The server never receives your plaintext or decryption key.
+        </p>
+      </header>
+
+      <!-- BAND 01: PASTE MESSAGE -->
+      <section class="pz-console-band" id="band-paste">
+        <div>
+          <span class="pz-step-index">01</span>
+          <h2 class="pz-band-title">Paste your message</h2>
+          <p class="pz-band-copy">
+            Type or load a sample team message. Unleak finds live keys mid-sentence without altering the rest of your text.
+          </p>
+          <div class="pz-sample-links" aria-label="Sample messages">
+            <button type="button" class="pz-text-btn is-active" data-preset="contractor">
+              Load sample: Contractor onboarding
+            </button>
+            <button type="button" class="pz-text-btn" data-preset="incident">
+              Load sample: Production Redis hotfix
+            </button>
+            <button type="button" class="pz-text-btn" data-preset="agency">
+              Load sample: Agency client handoff
+            </button>
+          </div>
+        </div>
+
+        <div class="pz-composer-surface">
+          <textarea
+            id="raw-chat-input"
+            class="pz-composer-textarea"
+            spellcheck="false"
+            aria-label="Chat message containing secrets"
+          ></textarea>
+
+          <div class="pz-composer-footer">
+            <div class="pz-detected-summary" id="detected-summary-line">
+              Detecting secrets...
+            </div>
+
+            <div class="pz-composer-controls">
+              <label for="ttl-select" style="font-size: 13px; color: var(--ink-secondary);">Expiry</label>
+              <select id="ttl-select" class="pz-ttl-picker">
+                <option value="15">15m</option>
+                <option value="60" selected>1h</option>
+                <option value="1440">24h</option>
+              </select>
+
+              <button type="button" class="pz-btn-cta" id="btn-scrub-message">
+                <span class="pz-cta-square-orange">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="3" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="6" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="12" cy="8" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="5.5" r="1.1" fill="#FFFFFF"/>
+                    <circle cx="9.5" cy="10.5" r="1.1" fill="#FFFFFF"/>
+                  </svg>
+                </span>
+                <span id="btn-scrub-label">Scrub message</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BAND 02: SAFE MESSAGE OUTPUT (Open on canvas, no box) -->
+      <section class="pz-console-band" id="band-output">
+        <div>
+          <span class="pz-step-index">02</span>
+          <h2 class="pz-band-title">Copy safe message</h2>
+          <p class="pz-band-copy" id="scrub-timing-line">
+            Each secret is replaced inline by its own one-time link. The decryption key stays after the <code>#k=</code> fragment.
+          </p>
+          <button type="button" class="pz-btn-secondary" id="btn-copy-safe-message">
+            <span class="pz-cta-square-dark">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="5" y="5" width="8" height="8" rx="1.5" stroke="#FFFFFF" stroke-width="1.5"/>
+                <path d="M3 11V3.5C3 3.22 3.22 3 3.5 3H11" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span id="copy-safe-label">Copy safe message</span>
+          </button>
+        </div>
+
+        <div>
+          <div class="pz-scrubbed-text" id="scrubbed-message-output"></div>
+          <p style="font-size: 13.5px; color: var(--ink-muted);">
+            Paste this directly into Slack, WhatsApp, or Telegram. Preview crawlers will not trigger a burn.
+          </p>
+        </div>
+      </section>
+
+      <!-- BAND 03: BOT PREVIEW VS HUMAN REVEAL (Open hairline rows, no nested boxes) -->
+      <section class="pz-console-band" id="band-verify">
+        <div>
+          <span class="pz-step-index">03</span>
+          <h2 class="pz-band-title">Verify bot immunity &amp; one-time burn</h2>
+          <p class="pz-band-copy">
+            Chat apps send a <code>GET</code> request to build a link preview. Test both actions on any link to see how preview bots are ignored while a human reveal wipes the secret from memory once.
+          </p>
+        </div>
+
+        <div id="capsules-simulator-list">
+          <!-- Open hairline rows populated by app.js -->
+        </div>
+      </section>
+
+      <!-- BAND 04: ZERO-TRUST AI ROTATION CHECKLIST (Open hairline list, no nested boxes) -->
+      <section class="pz-console-band" id="band-rotation">
+        <div>
+          <span class="pz-step-index">04</span>
+          <h2 class="pz-band-title">Post-burn rotation order</h2>
+          <p class="pz-band-copy">
+            Unleak sends only the credential type labels to generate a rotation plan, never the values.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-secondary); margin-bottom: 16px; word-break: break-all;" id="ai-payload-code"></div>
+          <button type="button" class="pz-text-btn" id="btn-test-ai-guardrail">
+            Test guardrail: try sending a raw key to AI
+          </button>
+          <div id="ai-guardrail-alert" class="pz-capsule-log" style="margin-top: 14px;"></div>
+        </div>
+
+        <div id="ai-checklist-container">
+          <!-- Open hairline rotation items populated by app.js -->
+        </div>
+      </section>
+
+      <footer class="pz-footer">
+        <div>Unleak — Zero-knowledge secret scrubbing for team chat</div>
+        <div style="display: flex; gap: 24px;">
+          <a href="/" class="pz-nav-quiet-link">Overview</a>
+          <a href="/deck.html" class="pz-nav-quiet-link">Executive Brief</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

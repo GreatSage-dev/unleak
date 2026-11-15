@@ -1,5 +1,5 @@
 /* Hallmark · v2.0.0 · shape: workbench · theme: playerzero-custom */
-/* critique: Open alabaster canvas (#F3F2EE) with a single white proof strip on the landing page and hairline-divided open sections in the dedicated console tab; zero nested cards or pill clutter. */
+/* critique: Open alabaster canvas (#F3F2EE) with functional two-pane workspace in /console.html and standalone recipient vault in /v/:id. */
 
 :root {
   --bg-canvas: #F3F2EE;
@@ -40,7 +40,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle top blueprint grid fading into the open canvas */
 .pz-shell {
   background-image:
     linear-gradient(to right, rgba(20, 20, 19, 0.022) 1px, transparent 1px),
@@ -50,15 +49,15 @@ body {
 }
 
 .pz-container {
-  max-width: 1120px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 0 32px;
 }
 
-/* Focus states */
 a:focus-visible,
 button:focus-visible,
 textarea:focus-visible,
+input:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--ink-primary);
   outline-offset: 2px;
@@ -136,12 +135,13 @@ select:focus-visible {
   font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 500;
-  padding: 9px 16px;
+  padding: 8px 15px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
@@ -150,7 +150,7 @@ select:focus-visible {
   opacity: 0.92;
 }
 
-/* 2. HERO SECTION (Open canvas, dot-matrix words, schematic lines) */
+/* 2. HERO SECTION */
 .pz-hero {
   padding: 64px 0 56px;
   text-align: center;
@@ -230,7 +230,6 @@ select:focus-visible {
   font-weight: 400;
 }
 
-/* Signature PlayerZero CTA with Terracotta Icon Square */
 .pz-btn-cta {
   display: inline-flex;
   align-items: center;
@@ -264,7 +263,6 @@ select:focus-visible {
   flex-shrink: 0;
 }
 
-/* Secondary White CTA with Dark Icon Square */
 .pz-btn-secondary {
   display: inline-flex;
   align-items: center;
@@ -297,7 +295,7 @@ select:focus-visible {
   flex-shrink: 0;
 }
 
-/* 3. THE SINGLE WHITE PROOF STRIP ON THE LANDING PAGE */
+/* 3. LANDING PAGE PROOF STRIP & EDITORIAL */
 .pz-proof-strip {
   background-color: var(--bg-surface);
   border: 1px solid var(--line-subtle);
@@ -336,7 +334,6 @@ select:focus-visible {
   color: var(--ink-secondary);
 }
 
-/* 4. OPEN EDITORIAL SECTIONS (NO CARDS, NO SHAPES — DIRECTLY ON CANVAS) */
 .pz-editorial {
   padding: 12px 0 96px;
 }
@@ -412,7 +409,6 @@ select:focus-visible {
   max-width: 280px;
 }
 
-/* 5. OPEN HAIRLINE SPECIFICATIONS & PRICING ON CANVAS (NO BOXES) */
 .pz-open-section {
   padding: 64px 0;
   border-top: 1px solid var(--line-subtle);
@@ -466,7 +462,6 @@ select:focus-visible {
   color: var(--ink-secondary);
 }
 
-/* Open Pricing Columns (Separated by Hairline, Not Boxed Cards) */
 .pz-pricing-open {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -500,7 +495,363 @@ select:focus-visible {
   color: var(--ink-secondary);
 }
 
-/* 6. DEDICATED CONSOLE TAB (/console.html) — OPEN WORKBENCH LAYOUT */
+/* 4. FUNCTIONAL WORKSPACE (/console.html) */
+.pz-app-topbar {
+  padding: 36px 0 24px;
+  border-bottom: 1px solid var(--line-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.pz-app-title {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.pz-app-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pz-input-inline {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 10px;
+  padding: 8px 13px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: var(--ink-primary);
+}
+
+.pz-select-inline {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 10px;
+  padding: 8px 13px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: var(--ink-primary);
+}
+
+.pz-btn-quiet {
+  background-color: transparent;
+  border: 1px solid var(--line-subtle);
+  border-radius: 10px;
+  padding: 8px 13px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pz-btn-quiet:hover {
+  background-color: var(--bg-surface);
+}
+
+/* Two-pane Scrubber Workspace */
+.pz-workspace-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  padding: 32px 0 48px;
+  align-items: start;
+}
+
+.pz-pane-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pz-pane-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-primary);
+}
+
+.pz-pane-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pz-text-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.pz-text-btn:hover {
+  color: var(--ink-primary);
+}
+
+.pz-editor-surface {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.pz-editor-textarea {
+  width: 100%;
+  min-height: 210px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-primary);
+  resize: vertical;
+  outline: none;
+}
+
+.pz-editor-bar {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.pz-secret-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pz-secret-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-primary);
+  padding: 4px 0;
+}
+
+.pz-secret-toggle-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.pz-custom-redact-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pz-output-surface {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 312px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pz-output-pre {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.pz-burn-inline-anchor {
+  color: var(--accent-terracotta);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+.pz-output-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Open Hairline Vault Ledger Table */
+.pz-ledger-section {
+  padding: 40px 0;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.pz-ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pz-ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pz-ledger-table th,
+.pz-ledger-table td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--line-subtle);
+  font-size: 13.5px;
+  vertical-align: middle;
+}
+
+.pz-ledger-table th {
+  font-weight: 500;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.pz-mono-cell {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.pz-state-locked {
+  color: var(--status-safe);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.pz-state-burned {
+  color: var(--status-burned);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.pz-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Open Rotation Runbook Section */
+.pz-runbook-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.pz-runbook-item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.pz-runbook-item:first-child {
+  padding-top: 0;
+}
+
+.pz-runbook-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.pz-cli-bar {
+  margin: 10px 0;
+  background-color: var(--bg-code);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+/* 5. STANDALONE RECIPIENT VAULT PAGE (/v/:id -> reveal.html) */
+.pz-vault-stage {
+  max-width: 620px;
+  margin: 72px auto 96px;
+  padding: 0 24px;
+}
+
+.pz-vault-surface {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: 22px;
+  padding: 40px;
+}
+
+.pz-vault-meta-list {
+  margin: 24px 0;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.pz-vault-meta-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line-subtle);
+  font-size: 14px;
+}
+
+.pz-vault-secret-output {
+  margin: 24px 0;
+  background-color: var(--bg-code);
+  border-radius: 12px;
+  padding: 18px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  word-break: break-all;
+  color: var(--ink-primary);
+}
+
+.pz-footer {
+  padding: 44px 0 64px;
+  border-top: 1px solid var(--line-subtle);
+  margin-top: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--ink-muted);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .pz-console-header {
   padding: 56px 0 40px;
   display: flex;
@@ -535,241 +886,6 @@ select:focus-visible {
   margin-bottom: 10px;
 }
 
-.pz-band-copy {
-  font-size: 15px;
-  color: var(--ink-secondary);
-  margin-bottom: 20px;
-}
-
-.pz-sample-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.pz-text-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--ink-secondary);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 0.15s ease;
-}
-
-.pz-text-btn:hover,
-.pz-text-btn.is-active {
-  color: var(--ink-primary);
-  font-weight: 500;
-}
-
-/* The Single White Composer Surface in Console Step 1 */
-.pz-composer-surface {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--line-subtle);
-  border-radius: 18px;
-  padding: 24px;
-}
-
-.pz-composer-textarea {
-  width: 100%;
-  min-height: 148px;
-  border: none;
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  line-height: 1.7;
-  color: var(--ink-primary);
-  resize: vertical;
-  outline: none;
-}
-
-.pz-composer-footer {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.pz-detected-summary {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--ink-secondary);
-}
-
-.pz-composer-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.pz-ttl-picker {
-  background: transparent;
-  border: 1px solid var(--line-subtle);
-  border-radius: 9px;
-  padding: 7px 12px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--ink-primary);
-}
-
-/* Step 2: Open Scrubbed Output */
-.pz-scrubbed-text {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--ink-primary);
-  white-space: pre-wrap;
-  word-break: break-word;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--line-subtle);
-  margin-bottom: 20px;
-}
-
-.pz-burn-inline-anchor {
-  color: var(--accent-terracotta);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  font-weight: 500;
-}
-
-/* Step 3: Open Hairline Capsule Rows (No Nested Boxes!) */
-.pz-capsule-row {
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line-subtle);
-}
-
-.pz-capsule-row:first-child {
-  padding-top: 0;
-}
-
-.pz-capsule-header-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-}
-
-.pz-capsule-title {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink-primary);
-}
-
-.pz-capsule-state {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-}
-
-.pz-capsule-state.is-locked {
-  color: var(--status-safe);
-}
-
-.pz-capsule-state.is-burned {
-  color: var(--status-burned);
-}
-
-.pz-capsule-url {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--ink-secondary);
-  word-break: break-all;
-  margin-bottom: 16px;
-}
-
-.pz-capsule-url strong {
-  color: var(--ink-primary);
-  font-weight: 500;
-}
-
-.pz-capsule-btn-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.pz-capsule-log {
-  margin-top: 14px;
-  padding-left: 14px;
-  border-left: 2px solid var(--ink-primary);
-  font-size: 14px;
-  color: var(--ink-secondary);
-  display: none;
-}
-
-.pz-capsule-log.is-visible {
-  display: block;
-}
-
-.pz-revealed-value {
-  margin-top: 8px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--ink-primary);
-  background-color: var(--bg-code);
-  padding: 8px 12px;
-  border-radius: 8px;
-  display: inline-block;
-  word-break: break-all;
-}
-
-/* Step 4: Open Rotation Order List */
-.pz-rotation-item {
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line-subtle);
-}
-
-.pz-rotation-item:first-child {
-  padding-top: 0;
-}
-
-.pz-rotation-item h4 {
-  font-size: 17px;
-  font-weight: 500;
-  margin-bottom: 4px;
-}
-
-.pz-rotation-window {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--ink-muted);
-  margin-bottom: 10px;
-}
-
-.pz-rotation-steps {
-  padding-left: 18px;
-  font-size: 14.5px;
-  color: var(--ink-secondary);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.pz-footer {
-  padding: 44px 0 64px;
-  border-top: 1px solid var(--line-subtle);
-  margin-top: 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  color: var(--ink-muted);
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -778,11 +894,13 @@ select:focus-visible {
   }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 900px) {
   .pz-proof-strip,
   .pz-editorial-split,
   .pz-open-grid,
   .pz-pricing-open,
+  .pz-workspace-split,
+  .pz-runbook-grid,
   .pz-console-band {
     grid-template-columns: 1fr;
   }
@@ -796,8 +914,5 @@ select:focus-visible {
   .pz-hairline-row {
     grid-template-columns: 1fr;
     gap: 6px;
-  }
-  .pz-nav-tabs {
-    gap: 16px;
   }
 }

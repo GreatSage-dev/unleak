@@ -60,9 +60,11 @@ export const SECRET_PATTERNS = [
     type: 'ENV_ASSIGNMENT',
     label: 'Inline Environment Secret',
     severity: 'high',
-    regex: /\b([A-Z][A-Z0-9_]{2,}_(?:KEY|SECRET|TOKEN|PASSWORD|PASS|PRIVATE_KEY|WEBHOOK))\s*=\s*([^\s"'`]{8,})/g
+    regex: /\b([A-Z][A-Z0-9_]{2,}_(?:KEY|SECRET|TOKEN|PASSWORD|PASS|PRIVATE_KEY|WEBHOOK))\s*=\s*(?:"([^"\r\n]{6,})"|'([^'\r\n]{6,})'|([^\s"'`#]{6,}))/g
   }
 ];
+
+const URI_TRAILING_PUNCTUATION = /[.,;:!?)]+$/;
 
 /**
  * Scans a messy chat message and extracts all secret spans deterministically.
@@ -78,7 +80,8 @@ export function detectSecretsInMessage(rawText) {
     while ((match = regex.exec(rawText)) !== null) {
       if (rule.type === 'ENV_ASSIGNMENT') {
         const keyName = match[1];
-        const secretValue = match[2];
+        const secretValue = match[2] || match[3] || match[4];
+        if (!secretValue) continue;
         const valueOffset = match.index + match[0].indexOf(secretValue);
         candidates.push({
           type: keyName,
@@ -89,13 +92,18 @@ export function detectSecretsInMessage(rawText) {
           end: valueOffset + secretValue.length
         });
       } else {
+        let val = match[0];
+        let start = match.index;
+        if (rule.type.includes('URI')) {
+          val = val.replace(URI_TRAILING_PUNCTUATION, '');
+        }
         candidates.push({
           type: rule.type,
           label: rule.label,
           severity: rule.severity,
-          value: match[0],
-          start: match.index,
-          end: match.index + match[0].length
+          value: val,
+          start: start,
+          end: start + val.length
         });
       }
     }

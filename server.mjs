@@ -152,8 +152,23 @@ const MIME_TYPES = {
 
 export function createUnleakServer() {
   return http.createServer(async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204);
+      return res.end();
+    }
+
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const pathname = url.pathname;
+
+    if (pathname === '/favicon.ico') {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><rect x="12" y="2" width="12" height="9" rx="3.5" fill="#141413"/><rect x="12" y="25" width="12" height="9" rx="3.5" fill="#141413"/><rect x="2" y="12" width="9" height="12" rx="3.5" fill="#141413"/><rect x="25" y="12" width="9" height="12" rx="3.5" fill="#141413"/><circle cx="9.5" cy="9.5" r="2.5" fill="#141413"/><circle cx="26.5" cy="9.5" r="2.5" fill="#141413"/><circle cx="9.5" cy="26.5" r="2.5" fill="#141413"/><circle cx="26.5" cy="26.5" r="2.5" fill="#141413"/></svg>`;
+      res.writeHead(200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' });
+      return res.end(svg);
+    }
 
     // 1. Create Encrypted Capsule (POST /api/capsules)
     if (req.method === 'POST' && pathname === '/api/capsules') {
@@ -338,12 +353,24 @@ export function createUnleakServer() {
       }
 
       if (capsule.burned || !capsule.ciphertext || Date.now() > capsule.expiresAtMs) {
+        if (Date.now() > capsule.expiresAtMs && !capsule.burned) {
+          capsule.ciphertext = null;
+          capsule.iv = null;
+          capsule.burned = true;
+          capsule.status = 'EXPIRED';
+          capsule.burnedAt = new Date().toISOString();
+        }
         return sendJson(res, 410, {
           id: capsule.id,
           status: capsule.status || 'BURNED',
           burnedAt: capsule.burnedAt,
           receiptHash: capsule.receiptHash,
-          message: '410 GONE: Credential was already revealed and wiped from server memory.'
+          message:
+            capsule.status === 'EXPIRED'
+              ? '410 GONE: This vault link expired before it was opened.'
+              : capsule.status === 'REVOKED'
+              ? '410 GONE: This vault link was revoked by the sender.'
+              : '410 GONE: Credential was already revealed and wiped from server memory.'
         });
       }
 

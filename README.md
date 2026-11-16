@@ -1,7 +1,7 @@
 # Unleak
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-141413.svg)](./LICENSE)
-[![Tests: 6/6 Passing](https://img.shields.io/badge/Tests-6%2F6_Passing_Deterministically-1D6F4A.svg)](./test/verify.mjs)
+[![Tests: 8/8 Passing](https://img.shields.io/badge/Tests-8%2F8_Passing_Deterministically-1D6F4A.svg)](./test/verify.mjs)
 [![Encryption: WebCrypto AES-256-GCM](https://img.shields.io/badge/Crypto-Browser_AES--256--GCM-DE6347.svg)](./src/scrubber.mjs)
 
 **Stop pasting live API keys and database URLs into team chat.** Unleak takes any messy chat paragraph, finds the embedded secrets by regex in your browser, encrypts each one separately with `AES-256-GCM`, and hands back the exact same sentence with bot-safe, one-time burn links.
@@ -45,10 +45,10 @@
 ## Quick Start & Deterministic Verification
 
 ```bash
-# 1. Run the 6-assertion deterministic verification suite (exits with code 0)
+# 1. Run the 8-assertion deterministic verification suite (exits with code 0)
 npm test
 
-# 2. Start the Unleak server (Landing Page at / and Console at /console.html)
+# 2. Start the Unleak server (Landing Page at / and Workspace at /console.html)
 npm start
 ```
 
@@ -58,12 +58,14 @@ npm start
 
 | Assertion | Verified Mechanism | Status |
 | :--- | :--- | :--- |
-| **1. Inline Chat Regex** | Extracts `POSTGRES_URI`, `OPENAI_API_KEY`, and `STRIPE_SECRET_KEY` from natural prose | `PASS` |
+| **1. Chat Regex Extraction** | Extracts Postgres, OpenAI, Stripe, and quoted env keys (`AUTH_SECRET="pass"`) with trailing punctuation isolation | `PASS` |
 | **2. Browser AES-256-GCM** | Encrypts & decrypts via WebCrypto subtle API with 256-bit `#hash` key | `PASS` |
 | **3. Zero-Knowledge Refusal** | Server rejects any `POST /api/capsules` containing `keyFragment` or `plaintext` (`400`) | `PASS` |
 | **4. Crawler `GET` Immunity** | Simulated Slack/WhatsApp preview bots hit `GET` twice without burning ciphertext | `PASS` |
 | **5. Atomic `POST` Burn** | First human `POST /burn` retrieves ciphertext once and wipes server memory | `PASS` |
-| **6. `410 GONE` & AI Guardrail** | Second `POST /burn` returns `410 Gone`; raw keys sent to AI return `400 Blocked` | `PASS` |
+| **6. `410 GONE` & Revocation** | Second `POST /burn` returns `410 Gone`; sender `DELETE` revokes active vault | `PASS` |
+| **7. Zero-Trust Rotation AI** | Generates rotation checklist & provider CLI commands; blocks raw secrets (`400`) | `PASS` |
+| **8. CORS & Zero 404s** | CORS preflight (`204`) & SVG favicon handler return clean responses (0 console errors) | `PASS` |
 
 ---
 

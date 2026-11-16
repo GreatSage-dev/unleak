@@ -116,6 +116,33 @@ function downloadFile(filename, content, mimeType = 'text/plain;charset=utf-8') 
   URL.revokeObjectURL(url);
 }
 
+async function copyToClipboard(text) {
+  if (!text) return false;
+  if (navigator?.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to textarea execCommand fallback
+    }
+  }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    ta.style.top = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const success = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return success;
+  } catch {
+    return false;
+  }
+}
+
 // Keep a local session map of { [capsuleId]: keyFragment } so the sender can copy or open their own vault links
 function saveLocalKeyFragment(id, keyFragment) {
   try {
@@ -392,9 +419,9 @@ function initConsoleWorkspace() {
 
     document.querySelectorAll('.js-copy-vault-link').forEach((btn) => {
       btn.addEventListener('click', async () => {
-        await navigator.clipboard.writeText(btn.dataset.url);
+        const ok = await copyToClipboard(btn.dataset.url);
         const orig = btn.textContent;
-        btn.textContent = 'Copied!';
+        btn.textContent = ok ? 'Copied!' : 'Failed';
         setTimeout(() => {
           btn.textContent = orig;
         }, 1500);
@@ -479,8 +506,8 @@ function initConsoleWorkspace() {
 
     document.querySelectorAll('.js-copy-cli').forEach((btn) => {
       btn.addEventListener('click', async () => {
-        await navigator.clipboard.writeText(btn.dataset.cmd);
-        btn.textContent = 'Copied';
+        const ok = await copyToClipboard(btn.dataset.cmd);
+        btn.textContent = ok ? 'Copied' : 'Failed';
         setTimeout(() => {
           btn.textContent = 'Copy CLI';
         }, 1500);
@@ -495,6 +522,13 @@ function initConsoleWorkspace() {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
       e.preventDefault();
       scrubAndEncryptWorkspaceMessage();
+    }
+  });
+
+  customSecretInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addCustomSecretBtn.click();
     }
   });
 
@@ -540,8 +574,8 @@ function initConsoleWorkspace() {
 
   copySafeBtn.addEventListener('click', async () => {
     if (!latestScrubbedText) return;
-    await navigator.clipboard.writeText(latestScrubbedText);
-    copySafeLabel.textContent = 'Copied!';
+    const ok = await copyToClipboard(latestScrubbedText);
+    copySafeLabel.textContent = ok ? 'Copied!' : 'Failed';
     setTimeout(() => {
       copySafeLabel.textContent = 'Copy scrubbed message';
     }, 1800);
@@ -549,8 +583,8 @@ function initConsoleWorkspace() {
 
   copyLinksOnlyBtn.addEventListener('click', async () => {
     if (latestGeneratedLinks.length === 0) return;
-    await navigator.clipboard.writeText(latestGeneratedLinks.join('\n'));
-    copyLinksOnlyBtn.textContent = 'Copied links!';
+    const ok = await copyToClipboard(latestGeneratedLinks.join('\n'));
+    copyLinksOnlyBtn.textContent = ok ? 'Copied links!' : 'Failed';
     setTimeout(() => {
       copyLinksOnlyBtn.textContent = 'Copy links only';
     }, 1800);
@@ -759,16 +793,19 @@ async function initRecipientVaultPage() {
 
       const displayEl = document.getElementById('revealed-secret-display');
       document.getElementById('btn-copy-raw-val').addEventListener('click', async function () {
-        await navigator.clipboard.writeText(plaintext);
-        this.textContent = 'Copied!';
+        const ok = await copyToClipboard(plaintext);
+        this.textContent = ok ? 'Copied!' : 'Failed';
         setTimeout(() => {
           this.textContent = 'Copy credential';
         }, 1500);
       });
 
       document.getElementById('btn-copy-env-line').addEventListener('click', async function () {
-        await navigator.clipboard.writeText(`${burnData.secretType}="${plaintext}"`);
-        this.textContent = 'Copied .env line!';
+        const ok = await copyToClipboard(`${burnData.secretType}="${plaintext}"`);
+        this.textContent = ok ? 'Copied .env line!' : 'Failed';
+        setTimeout(() => {
+          this.textContent = `Copy as ${burnData.secretType}=...`;
+        }, 1500);
       });
 
       document.getElementById('btn-toggle-mask').addEventListener('click', function () {

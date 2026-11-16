@@ -150,8 +150,7 @@ const MIME_TYPES = {
   '.png': 'image/png'
 };
 
-export function createUnleakServer() {
-  return http.createServer(async (req, res) => {
+export async function handleRequest(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -453,8 +452,13 @@ export function createUnleakServer() {
     }
 
     sendJson(res, 404, { error: 'NOT_FOUND', message: `Route ${pathname} not found.` });
-  });
 }
+
+export function createUnleakServer() {
+  return http.createServer(handleRequest);
+}
+
+export default handleRequest;
 
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
   const PORT = process.env.PORT || 3847;

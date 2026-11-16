@@ -3,6 +3,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-141413.svg)](./LICENSE)
 [![Tests: 8/8 Passing](https://img.shields.io/badge/Tests-8%2F8_Passing_Deterministically-1D6F4A.svg)](./test/verify.mjs)
 [![Encryption: WebCrypto AES-256-GCM](https://img.shields.io/badge/Crypto-Browser_AES--256--GCM-DE6347.svg)](./src/scrubber.mjs)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-unleak--zeta.vercel.app-000000.svg)](https://unleak-zeta.vercel.app)
+
+> **Live Deployment:** [https://unleak-zeta.vercel.app](https://unleak-zeta.vercel.app)  
+> **Interactive Scrubber Workspace:** [https://unleak-zeta.vercel.app/console](https://unleak-zeta.vercel.app/console)  
+> **Executive Pitch Deck (3 Slides):** [https://unleak-zeta.vercel.app/deck](https://unleak-zeta.vercel.app/deck)
 
 **Stop pasting live API keys and database URLs into team chat.** Unleak takes any messy chat paragraph, finds the embedded secrets by regex in your browser, encrypts each one separately with `AES-256-GCM`, and hands back the exact same sentence with bot-safe, one-time burn links.
 

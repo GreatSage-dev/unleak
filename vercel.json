@@ -6,6 +6,6 @@
     { "source": "/console", "destination": "/console.html" },
     { "source": "/deck", "destination": "/deck.html" },
     { "source": "/v/:id", "destination": "/reveal.html" },
-    { "source": "/api/:path*", "destination": "/api/index.mjs" }
+    { "source": "/api/:path*", "destination": "/api/[...path].mjs?path=:path*" }
   ]
 }

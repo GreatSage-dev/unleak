@@ -160,8 +160,15 @@ export async function handleRequest(req, res) {
       return res.end();
     }
 
-    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-    const pathname = url.pathname;
+    const effectiveUrl = req.headers['x-matched-path'] || req.url;
+    const url = new URL(effectiveUrl, `http://${req.headers.host || 'localhost'}`);
+    let pathname = url.pathname;
+    if ((pathname.includes('/index.mjs') || pathname.includes('[...path]')) && url.searchParams.has('path')) {
+      const p = url.searchParams.get('path');
+      pathname = p.startsWith('/') ? `/api${p}` : `/api/${p}`;
+    } else if (req.headers['x-matched-path']) {
+      pathname = req.headers['x-matched-path'];
+    }
 
     if (pathname === '/favicon.ico') {
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><rect x="12" y="2" width="12" height="9" rx="3.5" fill="#141413"/><rect x="12" y="25" width="12" height="9" rx="3.5" fill="#141413"/><rect x="2" y="12" width="9" height="12" rx="3.5" fill="#141413"/><rect x="25" y="12" width="9" height="12" rx="3.5" fill="#141413"/><circle cx="9.5" cy="9.5" r="2.5" fill="#141413"/><circle cx="26.5" cy="9.5" r="2.5" fill="#141413"/><circle cx="9.5" cy="26.5" r="2.5" fill="#141413"/><circle cx="26.5" cy="26.5" r="2.5" fill="#141413"/></svg>`;
